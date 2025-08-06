@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful Breathing - 4-7-8 Technique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating particles for ambiance */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) { width: 4px; height: 4px; left: 20%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 6px; height: 6px; left: 40%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 3px; height: 3px; left: 60%; animation-delay: 4s; }
+        .particle:nth-child(4) { width: 5px; height: 5px; left: 80%; animation-delay: 6s; }
+        .particle:nth-child(5) { width: 4px; height: 4px; left: 10%; animation-delay: 1s; }
+        .particle:nth-child(6) { width: 3px; height: 3px; left: 90%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef, #fecfef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+
+        .breathing-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 50px;
+        }
+
+        .breathing-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(135, 206, 250, 0.2), rgba(70, 130, 180, 0.1));
+            border: 2px solid rgba(135, 206, 250, 0.4);
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 0 60px rgba(135, 206, 250, 0.3),
+                inset 0 0 60px rgba(255, 255, 255, 0.1);
+            transition: all ease-in-out;
+        }
+
+        .inner-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all ease-in-out;
+        }
+
+        .center-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            transition: all ease-in-out;
+        }
+
+        .instruction {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: all 0.5s ease;
+        }
+
+        .timer {
+            font-size: 4rem;
+            font-weight: 200;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .phase-indicator {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            color: #b8c6db;
+            margin-top: 20px;
+        }
+
+        /* Inhale Animation */
+        .inhale .breathing-circle {
+            transform: translate(-50%, -50%) scale(1.8);
+            background: radial-gradient(circle, rgba(135, 206, 250, 0.4), rgba(70, 130, 180, 0.2));
+            border-color: rgba(135, 206, 250, 0.8);
+            box-shadow: 0 0 100px rgba(135, 206, 250, 0.6);
+        }
+
+        .inhale .inner-circle {
+            width: 180px;
+            height: 180px;
+            border-color: rgba(135, 206, 250, 0.5);
+        }
+
+        .inhale .center-dot {
+            width: 30px;
+            height: 30px;
+            box-shadow: 0 0 30px rgba(135, 206, 250, 0.8);
+        }
+
+        /* Hold Animation */
+        .hold .breathing-circle {
+            transform: translate(-50%, -50%) scale(1.8);
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.4), rgba(255, 165, 0, 0.2));
+            border-color: rgba(255, 215, 0, 0.8);
+            box-shadow: 
+                0 0 100px rgba(255, 215, 0, 0.6),
+                0 0 50px rgba(255, 215, 0, 0.4);
+        }
+
+        .hold .inner-circle {
+            width: 180px;
+            height: 180px;
+            border-color: rgba(255, 215, 0, 0.5);
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1), transparent);
+        }
+
+        .hold .center-dot {
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.9), rgba(255, 215, 0, 0.4));
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Exhale Animation */
+        .exhale .breathing-circle {
+            transform: translate(-50%, -50%) scale(1);
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.2), rgba(255, 105, 180, 0.1));
+            border-color: rgba(255, 182, 193, 0.4);
+            box-shadow: 0 0 60px rgba(255, 182, 193, 0.3);
+        }
+
+        .exhale .inner-circle {
+            width: 120px;
+            height: 120px;
+            border-color: rgba(255, 182, 193, 0.3);
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.1), transparent);
+        }
+
+        .exhale .center-dot {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.8), rgba(255, 182, 193, 0.3));
+            box-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
+        }
+
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: rippleAnimation 19s infinite;
+        }
+
+        @keyframes rippleAnimation {
+            0% { width: 200px; height: 200px; opacity: 1; }
+            21% { width: 360px; height: 360px; opacity: 0.3; }
+            58% { width: 360px; height: 360px; opacity: 0.3; }
+            100% { width: 200px; height: 200px; opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating particles -->
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+    <div class="container">
+        <h1 class="title">4-7-8 Breathing</h1>
+        
+        <div class="breathing-container">
+            <div class="ripple"></div>
+            <div class="breathing-circle" id="breathingCircle">
+                <div class="inner-circle"></div>
+                <div class="center-dot"></div>
+            </div>
+        </div>
+        
+        <div class="instruction" id="instruction">Prepare to begin</div>
+        <div class="timer" id="timer">4</div>
+        <div class="phase-indicator" id="phaseIndicator">Get ready...</div>
+    </div>
+
+    <script>
+        const phases = [
+            { name: 'Inhale', duration: 4, class: 'inhale', text: 'Breathe in slowly', indicator: 'Inhaling through your nose...' },
+            { name: 'Hold', duration: 7, class: 'hold', text: 'Hold gently', indicator: 'Holding your breath...' },
+            { name: 'Exhale', duration: 8, class: 'exhale', text: 'Release slowly', indicator: 'Exhaling through your mouth...' }
+        ];
+
+        let breathingInterval;
+        let countdownInterval;
+        let currentPhase = 0;
+        let currentCount = 0;
+
+        const container = document.getElementById('breathingCircle').parentElement;
+        const breathingCircle = document.getElementById('breathingCircle');
+        const instruction = document.getElementById('instruction');
+        const timer = document.getElementById('timer');
+        const phaseIndicator = document.getElementById('phaseIndicator');
+        const circles = document.querySelectorAll('.breathing-circle, .inner-circle, .center-dot');
+
+        function runBreathingCycle() {
+            const phase = phases[currentPhase];
+            const duration = phase.duration * 1000;
+            
+            // Update UI
+            instruction.textContent = phase.text;
+            phaseIndicator.textContent = phase.indicator;
+            
+            // Remove all classes first
+            container.classList.remove('inhale', 'hold', 'exhale');
+            
+            // Add current phase class
+            setTimeout(() => {
+                container.classList.add(phase.class);
+            }, 100);
+            
+            // Set transition duration for all circles
+            circles.forEach(circle => {
+                circle.style.transitionDuration = `${phase.duration}s`;
+            });
+            
+            // Countdown
+            currentCount = phase.duration;
+            timer.textContent = currentCount;
+            
+            countdownInterval = setInterval(() => {
+                currentCount--;
+                timer.textContent = currentCount || '';
+                
+                if (currentCount <= 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+
+            // Next phase
+            breathingInterval = setTimeout(() => {
+                currentPhase = (currentPhase + 1) % 3;
+                runBreathingCycle();
+            }, duration);
+        }
+
+        function startBreathing() {
+            currentPhase = 0;
+            instruction.textContent = 'Get ready to breathe';
+            phaseIndicator.textContent = 'Beginning your journey to calm...';
+            
+            setTimeout(() => {
+                runBreathingCycle();
+            }, 2000);
+        }
+
+        // Start automatically
+        setTimeout(startBreathing, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Breathing - 4-4-4-4</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #e2e8f0;
+            letter-spacing: 2px;
+        }
+
+        .breathing-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box-outer {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 3px solid rgba(148, 163, 184, 0.3);
+            border-radius: 12px;
+            transition: all ease-in-out;
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.1);
+        }
+
+        .box-middle {
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            border: 2px solid rgba(59, 130, 246, 0.4);
+            border-radius: 10px;
+            transition: all ease-in-out;
+            backdrop-filter: blur(8px);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .box-inner {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border: 2px solid rgba(99, 102, 241, 0.6);
+            border-radius: 8px;
+            transition: all ease-in-out;
+            backdrop-filter: blur(6px);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .box-core {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 2px solid rgba(168, 85, 247, 0.8);
+            border-radius: 6px;
+            transition: all ease-in-out;
+            backdrop-filter: blur(4px);
+            background: rgba(168, 85, 247, 0.15);
+        }
+
+        /* Breathing phases animations */
+        .inhale .box-outer {
+            width: 350px;
+            height: 350px;
+            border-color: rgba(34, 197, 94, 0.6);
+            box-shadow: 0 0 40px rgba(34, 197, 94, 0.3);
+        }
+
+        .inhale .box-middle {
+            width: 280px;
+            height: 280px;
+            border-color: rgba(34, 197, 94, 0.7);
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
+        }
+
+        .inhale .box-inner {
+            width: 210px;
+            height: 210px;
+            border-color: rgba(34, 197, 94, 0.8);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.2);
+        }
+
+        .inhale .box-core {
+            width: 140px;
+            height: 140px;
+            border-color: rgba(34, 197, 94, 1);
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+        }
+
+        .hold .box-outer {
+            width: 350px;
+            height: 350px;
+            border-color: rgba(59, 130, 246, 0.8);
+            box-shadow: 0 0 50px rgba(59, 130, 246, 0.4);
+        }
+
+        .hold .box-middle {
+            width: 280px;
+            height: 280px;
+            border-color: rgba(59, 130, 246, 0.9);
+            box-shadow: 0 0 35px rgba(59, 130, 246, 0.3);
+        }
+
+        .hold .box-inner {
+            width: 210px;
+            height: 210px;
+            border-color: rgba(59, 130, 246, 1);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .hold .box-core {
+            width: 140px;
+            height: 140px;
+            border-color: rgba(59, 130, 246, 1);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        .exhale .box-outer {
+            width: 250px;
+            height: 250px;
+            border-color: rgba(239, 68, 68, 0.6);
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
+        }
+
+        .exhale .box-middle {
+            width: 200px;
+            height: 200px;
+            border-color: rgba(239, 68, 68, 0.7);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+        }
+
+        .exhale .box-inner {
+            width: 150px;
+            height: 150px;
+            border-color: rgba(239, 68, 68, 0.8);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+        }
+
+        .exhale .box-core {
+            width: 100px;
+            height: 100px;
+            border-color: rgba(239, 68, 68, 1);
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+        }
+
+        .hold-empty .box-outer {
+            width: 250px;
+            height: 250px;
+            border-color: rgba(148, 163, 184, 0.5);
+            box-shadow: 0 0 20px rgba(148, 163, 184, 0.1);
+        }
+
+        .hold-empty .box-middle {
+            width: 200px;
+            height: 200px;
+            border-color: rgba(148, 163, 184, 0.6);
+            box-shadow: 0 0 15px rgba(148, 163, 184, 0.1);
+        }
+
+        .hold-empty .box-inner {
+            width: 150px;
+            height: 150px;
+            border-color: rgba(148, 163, 184, 0.7);
+            box-shadow: 0 0 10px rgba(148, 163, 184, 0.1);
+        }
+
+        .hold-empty .box-core {
+            width: 100px;
+            height: 100px;
+            border-color: rgba(148, 163, 184, 0.8);
+            box-shadow: 0 0 8px rgba(148, 163, 184, 0.2);
+        }
+
+        .breathing-guide {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #ffffff;
+            z-index: 20;
+            transition: all ease-in-out;
+            top: 50%;
+            left: 50%;
+        }
+
+        .inhale .breathing-guide {
+            animation: traceBoxInhale 4s ease-in-out;
+        }
+
+        .hold .breathing-guide {
+            animation: traceBoxHold 4s ease-in-out;
+        }
+
+        .exhale .breathing-guide {
+            animation: traceBoxExhale 4s ease-in-out;
+        }
+
+        .hold-empty .breathing-guide {
+            animation: traceBoxHoldEmpty 4s ease-in-out;
+        }
+
+        @keyframes traceBoxInhale {
+            0% { transform: translate(-75px, 75px); }
+            100% { transform: translate(75px, 75px); }
+        }
+
+        @keyframes traceBoxHold {
+            0% { transform: translate(75px, 75px); }
+            100% { transform: translate(75px, -75px); }
+        }
+
+        @keyframes traceBoxExhale {
+            0% { transform: translate(75px, -75px); }
+            100% { transform: translate(-75px, -75px); }
+        }
+
+        @keyframes traceBoxHoldEmpty {
+            0% { transform: translate(-75px, -75px); }
+            100% { transform: translate(-75px, 75px); }
+        }
+
+        .instruction {
+            position: fixed;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #e2e8f0;
+            text-align: center;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .counter-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            font-weight: 200;
+            color: #60a5fa;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+            z-index: 25;
+        }
+
+        .phase-indicators {
+            display: none;
+        }
+
+        .background-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(148, 163, 184, 0.3);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">4-4-4-4 Breathing</h1>
+    </div>
+    
+    <div class="breathing-container" id="breathingContainer">
+        <div class="background-particles" id="particles"></div>
+        
+        <div class="box-outer"></div>
+        <div class="box-middle"></div>
+        <div class="box-inner"></div>
+        <div class="box-core"></div>
+        
+        <div class="counter-display" id="counter">4</div>
+        <div class="instruction" id="instruction">Prepare</div>
+    </div>
+
+    <script>
+        const phases = [
+            { name: 'Inhale', duration: 4, class: 'inhale' },
+            { name: 'Hold', duration: 4, class: 'hold' },
+            { name: 'Exhale', duration: 4, class: 'exhale' },
+            { name: 'Hold', duration: 4, class: 'hold-empty' }
+        ];
+
+        let breathingInterval;
+        let countdownInterval;
+        let currentPhase = 0;
+        let currentCount = 0;
+
+        const container = document.getElementById('breathingContainer');
+        const instruction = document.getElementById('instruction');
+        const counter = document.getElementById('counter');
+        const boxes = document.querySelectorAll('.box-outer, .box-middle, .box-inner, .box-core');
+
+        function updatePhaseIndicators() {
+            // Removed phase indicators functionality
+        }
+
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        function runBreathingCycle() {
+            const phase = phases[currentPhase];
+            const duration = phase.duration * 1000;
+            
+            // Update UI
+            instruction.textContent = phase.name;
+            updatePhaseIndicators();
+            
+            // Apply animation class
+            container.className = `breathing-container ${phase.class}`;
+            
+            // Set transition duration for all boxes
+            boxes.forEach(box => {
+                box.style.transitionDuration = `${phase.duration}s`;
+            });
+            
+            // Countdown
+            currentCount = phase.duration;
+            counter.textContent = currentCount;
+            
+            countdownInterval = setInterval(() => {
+                currentCount--;
+                counter.textContent = currentCount || '';
+                
+                if (currentCount <= 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+
+            // Next phase
+            breathingInterval = setTimeout(() => {
+                currentPhase = (currentPhase + 1) % 4;
+                runBreathingCycle();
+            }, duration);
+        }
+
+        function startBreathing() {
+            currentPhase = 0;
+            instruction.textContent = 'Get Ready';
+            setTimeout(() => {
+                runBreathingCycle();
+            }, 2000);
+        }
+
+        // Initialize
+        createParticles();
+        setTimeout(startBreathing, 1000);
+    </script>
+</body>
+</html>

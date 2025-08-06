@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4-4-8-4 Breathing Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e8f4f8 0%, #d1ecf1 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 4rem;
+            color: #2c5f6f;
+            text-align: center;
+        }
+
+        .breathing-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid #7dd3fc;
+            transition: all ease-in-out;
+        }
+
+        .circle:nth-child(1) {
+            width: 50px;
+            height: 50px;
+            border-color: #0891b2;
+            border-width: 3px;
+        }
+
+        .circle:nth-child(2) {
+            width: 80px;
+            height: 80px;
+            border-color: #0e7490;
+        }
+
+        .circle:nth-child(3) {
+            width: 110px;
+            height: 110px;
+            border-color: #155e75;
+        }
+
+        .circle:nth-child(4) {
+            width: 140px;
+            height: 140px;
+            border-color: #164e63;
+        }
+
+        .circle:nth-child(5) {
+            width: 170px;
+            height: 170px;
+            border-color: #1e3a8a;
+        }
+
+        .circle:nth-child(6) {
+            width: 200px;
+            height: 200px;
+            border-color: #1d4ed8;
+        }
+
+        .circle:nth-child(7) {
+            width: 230px;
+            height: 230px;
+            border-color: #2563eb;
+        }
+
+        .circle:nth-child(8) {
+            width: 260px;
+            height: 260px;
+            border-color: #3b82f6;
+        }
+
+        .circle:nth-child(9) {
+            width: 290px;
+            height: 290px;
+            border-color: #60a5fa;
+        }
+
+        .circle:nth-child(10) {
+            width: 320px;
+            height: 320px;
+            border-color: #93c5fd;
+        }
+
+        .inhale {
+            transform: scale(1.5);
+        }
+
+        .hold {
+            transform: scale(1.5);
+        }
+
+        .exhale {
+            transform: scale(0.6);
+        }
+
+        .hold-empty {
+            transform: scale(0.6);
+        }
+
+        .instruction {
+            position: absolute;
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c5f6f;
+            text-align: center;
+        }
+
+        .counter {
+            position: absolute;
+            font-size: 4rem;
+            font-weight: bold;
+            color: #0891b2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">4-4-8-4 Breathing</h1>
+    
+    <div class="breathing-container" id="breathingContainer">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        
+        <div class="counter" id="counter"></div>
+        <div class="instruction" id="instruction">Breathe</div>
+    </div>
+
+    <script>
+        let breathingInterval;
+        let countdownInterval;
+        let currentPhase = 0; // 0: inhale, 1: hold, 2: exhale, 3: hold empty
+        let currentCount = 0;
+
+        const phases = [
+            { name: 'Inhale', duration: 4, class: 'inhale' },
+            { name: 'Hold', duration: 4, class: 'hold' },
+            { name: 'Exhale', duration: 8, class: 'exhale' },
+            { name: 'Hold', duration: 4, class: 'hold-empty' }
+        ];
+
+        const container = document.getElementById('breathingContainer');
+        const instruction = document.getElementById('instruction');
+        const counter = document.getElementById('counter');
+        const circles = document.querySelectorAll('.circle');
+
+        function runBreathingCycle() {
+            const phase = phases[currentPhase];
+            const duration = phase.duration * 1000; // Convert to milliseconds
+            
+            // Update instruction
+            instruction.textContent = phase.name;
+            
+            // Apply animation class to all circles
+            circles.forEach(circle => {
+                circle.className = `circle ${phase.class}`;
+                circle.style.transitionDuration = `${phase.duration}s`;
+            });
+            
+            // Start countdown
+            currentCount = phase.duration;
+            counter.textContent = currentCount;
+            
+            countdownInterval = setInterval(() => {
+                currentCount--;
+                counter.textContent = currentCount || '';
+                
+                if (currentCount <= 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+
+            // Move to next phase after duration
+            breathingInterval = setTimeout(() => {
+                currentPhase = (currentPhase + 1) % 4;
+                runBreathingCycle();
+            }, duration);
+        }
+
+        // Start the breathing animation automatically
+        function startBreathing() {
+            currentPhase = 0;
+            runBreathingCycle();
+        }
+
+        // Initialize and start
+        setTimeout(startBreathing, 1000);
+    </script>
+</body>
+</html>

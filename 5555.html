@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful Breathing - 5-5-5-5 Technique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #e8d5e8 0%, #f0e6f0 50%, #f5ebf5 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #5a4a6a;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating ambient particles */
+        .ambient-particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(138, 114, 175, 0.2);
+            border-radius: 50%;
+            animation: ambientFloat 20s infinite linear;
+        }
+
+        @keyframes ambientFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(30px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            text-align: center;
+            max-width: 500px;
+            padding: 40px 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            color: #6b5b7b;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            color: #8a72af;
+        }
+
+        /* Main breathing visualization */
+        .breathing-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Geometric breathing mandala */
+        .breathing-mandala {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+            height: 280px;
+        }
+
+        .mandala-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 5s ease-in-out;
+        }
+
+        /* Create overlapping geometric shapes */
+        .petal-shape {
+            position: absolute;
+            background: rgba(186, 104, 200, 0.15);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform-origin: center;
+            transition: all 5s ease-in-out;
+        }
+
+        /* Layer 1 - Outermost petals */
+        .layer-1 {
+            width: 280px;
+            height: 280px;
+        }
+
+        .layer-1 .petal-shape {
+            width: 140px;
+            height: 140px;
+            background: rgba(186, 104, 200, 0.08);
+        }
+
+        .layer-1 .petal-shape:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg) translateY(-35px); }
+        .layer-1 .petal-shape:nth-child(2) { transform: translate(-50%, -50%) rotate(30deg) translateY(-35px); }
+        .layer-1 .petal-shape:nth-child(3) { transform: translate(-50%, -50%) rotate(60deg) translateY(-35px); }
+        .layer-1 .petal-shape:nth-child(4) { transform: translate(-50%, -50%) rotate(90deg) translateY(-35px); }
+        .layer-1 .petal-shape:nth-child(5) { transform: translate(-50%, -50%) rotate(120deg) translateY(-35px); }
+        .layer-1 .petal-shape:nth-child(6) { transform: translate(-50%, -50%) rotate(150deg) translateY(-35px); }
+        .layer-1 .petal-shape:nth-child(7) { transform: translate(-50%, -50%) rotate(180deg) translateY(-35px); }
+        .layer-1 .petal-shape:nth-child(8) { transform: translate(-50%, -50%) rotate(210deg) translateY(-35px); }
+        .layer-1 .petal-shape:nth-child(9) { transform: translate(-50%, -50%) rotate(240deg) translateY(-35px); }
+        .layer-1 .petal-shape:nth-child(10) { transform: translate(-50%, -50%) rotate(270deg) translateY(-35px); }
+        .layer-1 .petal-shape:nth-child(11) { transform: translate(-50%, -50%) rotate(300deg) translateY(-35px); }
+        .layer-1 .petal-shape:nth-child(12) { transform: translate(-50%, -50%) rotate(330deg) translateY(-35px); }
+
+        /* Layer 2 - Middle petals */
+        .layer-2 {
+            width: 220px;
+            height: 220px;
+        }
+
+        .layer-2 .petal-shape {
+            width: 110px;
+            height: 110px;
+            background: rgba(186, 104, 200, 0.12);
+        }
+
+        .layer-2 .petal-shape:nth-child(1) { transform: translate(-50%, -50%) rotate(15deg) translateY(-28px); }
+        .layer-2 .petal-shape:nth-child(2) { transform: translate(-50%, -50%) rotate(45deg) translateY(-28px); }
+        .layer-2 .petal-shape:nth-child(3) { transform: translate(-50%, -50%) rotate(75deg) translateY(-28px); }
+        .layer-2 .petal-shape:nth-child(4) { transform: translate(-50%, -50%) rotate(105deg) translateY(-28px); }
+        .layer-2 .petal-shape:nth-child(5) { transform: translate(-50%, -50%) rotate(135deg) translateY(-28px); }
+        .layer-2 .petal-shape:nth-child(6) { transform: translate(-50%, -50%) rotate(165deg) translateY(-28px); }
+        .layer-2 .petal-shape:nth-child(7) { transform: translate(-50%, -50%) rotate(195deg) translateY(-28px); }
+        .layer-2 .petal-shape:nth-child(8) { transform: translate(-50%, -50%) rotate(225deg) translateY(-28px); }
+        .layer-2 .petal-shape:nth-child(9) { transform: translate(-50%, -50%) rotate(255deg) translateY(-28px); }
+        .layer-2 .petal-shape:nth-child(10) { transform: translate(-50%, -50%) rotate(285deg) translateY(-28px); }
+        .layer-2 .petal-shape:nth-child(11) { transform: translate(-50%, -50%) rotate(315deg) translateY(-28px); }
+        .layer-2 .petal-shape:nth-child(12) { transform: translate(-50%, -50%) rotate(345deg) translateY(-28px); }
+
+        /* Layer 3 - Inner petals */
+        .layer-3 {
+            width: 160px;
+            height: 160px;
+        }
+
+        .layer-3 .petal-shape {
+            width: 80px;
+            height: 80px;
+            background: rgba(186, 104, 200, 0.18);
+        }
+
+        .layer-3 .petal-shape:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg) translateY(-20px); }
+        .layer-3 .petal-shape:nth-child(2) { transform: translate(-50%, -50%) rotate(45deg) translateY(-20px); }
+        .layer-3 .petal-shape:nth-child(3) { transform: translate(-50%, -50%) rotate(90deg) translateY(-20px); }
+        .layer-3 .petal-shape:nth-child(4) { transform: translate(-50%, -50%) rotate(135deg) translateY(-20px); }
+        .layer-3 .petal-shape:nth-child(5) { transform: translate(-50%, -50%) rotate(180deg) translateY(-20px); }
+        .layer-3 .petal-shape:nth-child(6) { transform: translate(-50%, -50%) rotate(225deg) translateY(-20px); }
+        .layer-3 .petal-shape:nth-child(7) { transform: translate(-50%, -50%) rotate(270deg) translateY(-20px); }
+        .layer-3 .petal-shape:nth-child(8) { transform: translate(-50%, -50%) rotate(315deg) translateY(-20px); }
+
+        /* Layer 4 - Center core */
+        .layer-4 {
+            width: 100px;
+            height: 100px;
+        }
+
+        .layer-4 .petal-shape {
+            width: 50px;
+            height: 50px;
+            background: rgba(186, 104, 200, 0.25);
+        }
+
+        .layer-4 .petal-shape:nth-child(1) { transform: translate(-50%, -50%) rotate(22.5deg) translateY(-12px); }
+        .layer-4 .petal-shape:nth-child(2) { transform: translate(-50%, -50%) rotate(67.5deg) translateY(-12px); }
+        .layer-4 .petal-shape:nth-child(3) { transform: translate(-50%, -50%) rotate(112.5deg) translateY(-12px); }
+        .layer-4 .petal-shape:nth-child(4) { transform: translate(-50%, -50%) rotate(157.5deg) translateY(-12px); }
+        .layer-4 .petal-shape:nth-child(5) { transform: translate(-50%, -50%) rotate(202.5deg) translateY(-12px); }
+        .layer-4 .petal-shape:nth-child(6) { transform: translate(-50%, -50%) rotate(247.5deg) translateY(-12px); }
+        .layer-4 .petal-shape:nth-child(7) { transform: translate(-50%, -50%) rotate(292.5deg) translateY(-12px); }
+        .layer-4 .petal-shape:nth-child(8) { transform: translate(-50%, -50%) rotate(337.5deg) translateY(-12px); }
+
+        /* Central circle */
+        .center-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(186, 104, 200, 0.4), rgba(186, 104, 200, 0.3));
+            border-radius: 50%;
+            transition: all 5s ease-in-out;
+        }
+
+        /* Breathing animations for mandala */
+        .breathing-mandala.inhale .mandala-layer {
+            transform: translate(-50%, -50%) scale(1.3);
+        }
+
+        .breathing-mandala.inhale .petal-shape {
+            background: rgba(186, 104, 200, 0.25);
+        }
+
+        .breathing-mandala.inhale .center-circle {
+            transform: translate(-50%, -50%) scale(1.4);
+            background: radial-gradient(circle, rgba(186, 104, 200, 0.6), rgba(186, 104, 200, 0.4));
+        }
+
+        .breathing-mandala.hold1 .mandala-layer {
+            transform: translate(-50%, -50%) scale(1.3);
+        }
+
+        .breathing-mandala.hold1 .petal-shape {
+            background: rgba(186, 104, 200, 0.3);
+        }
+
+        .breathing-mandala.hold1 .center-circle {
+            transform: translate(-50%, -50%) scale(1.4);
+            background: radial-gradient(circle, rgba(186, 104, 200, 0.7), rgba(186, 104, 200, 0.5));
+        }
+
+        .breathing-mandala.exhale .mandala-layer {
+            transform: translate(-50%, -50%) scale(0.7);
+        }
+
+        .breathing-mandala.exhale .petal-shape {
+            background: rgba(186, 104, 200, 0.08);
+        }
+
+        .breathing-mandala.exhale .center-circle {
+            transform: translate(-50%, -50%) scale(0.6);
+            background: radial-gradient(circle, rgba(186, 104, 200, 0.3), rgba(186, 104, 200, 0.2));
+        }
+
+        .breathing-mandala.hold2 .mandala-layer {
+            transform: translate(-50%, -50%) scale(0.7);
+        }
+
+        .breathing-mandala.hold2 .petal-shape {
+            background: rgba(186, 104, 200, 0.1);
+        }
+
+        .breathing-mandala.hold2 .center-circle {
+            transform: translate(-50%, -50%) scale(0.6);
+            background: radial-gradient(circle, rgba(186, 104, 200, 0.25), rgba(186, 104, 200, 0.15));
+        }
+
+        /* Text elements */
+        .phase-indicator {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(138, 114, 175, 0.1);
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(138, 114, 175, 0.2);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #6b5b7b;
+        }
+
+        .phase-indicator.inhale {
+            background: rgba(255, 182, 193, 0.2);
+            border-color: rgba(255, 182, 193, 0.4);
+            color: #d6336c;
+        }
+
+        .phase-indicator.hold1 {
+            background: rgba(255, 223, 186, 0.3);
+            border-color: rgba(255, 193, 7, 0.4);
+            color: #e6a000;
+        }
+
+        .phase-indicator.exhale {
+            background: rgba(138, 114, 175, 0.2);
+            border-color: rgba(138, 114, 175, 0.4);
+            color: #6b5b7b;
+        }
+
+        .phase-indicator.hold2 {
+            background: rgba(200, 230, 255, 0.3);
+            border-color: rgba(100, 180, 255, 0.4);
+            color: #4a90e2;
+        }
+
+        .instruction {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+            min-height: 28px;
+            letter-spacing: 0.3px;
+            color: #6b5b7b;
+        }
+
+        .counter {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 25px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8a72af;
+            font-feature-settings: 'tnum';
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            .breathing-container {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
+            
+            .counter {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating ambient particles -->
+    <div class="ambient-particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="ambient-particle" style="left: 20%; animation-delay: 3s;"></div>
+    <div class="ambient-particle" style="left: 30%; animation-delay: 6s;"></div>
+    <div class="ambient-particle" style="left: 40%; animation-delay: 9s;"></div>
+    <div class="ambient-particle" style="left: 50%; animation-delay: 12s;"></div>
+    <div class="ambient-particle" style="left: 60%; animation-delay: 15s;"></div>
+    <div class="ambient-particle" style="left: 70%; animation-delay: 18s;"></div>
+    <div class="ambient-particle" style="left: 80%; animation-delay: 21s;"></div>
+    <div class="ambient-particle" style="left: 90%; animation-delay: 24s;"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="title">5-5-5-5 Breathing</h1>
+            <!-- <p class="subtitle">5-5-5-5 Breathing</p> -->
+        </div>
+        
+        <div class="phase-indicator" id="phaseIndicator">Prepare</div>
+        
+        <div class="breathing-container">
+            <!-- Geometric breathing mandala -->
+            <div class="breathing-mandala" id="breathingMandala">
+                <!-- Layer 1 - Outermost -->
+                <div class="mandala-layer layer-1">
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                </div>
+                
+                <!-- Layer 2 - Middle outer -->
+                <div class="mandala-layer layer-2">
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                </div>
+                
+                <!-- Layer 3 - Middle inner -->
+                <div class="mandala-layer layer-3">
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                </div>
+                
+                <!-- Layer 4 - Inner -->
+                <div class="mandala-layer layer-4">
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                    <div class="petal-shape"></div>
+                </div>
+                
+                <!-- Center circle -->
+                <div class="center-circle"></div>
+            </div>
+        </div>
+        
+        <div class="instruction" id="instruction">Find a comfortable position and relax</div>
+        <div class="counter" id="counter"></div>
+    </div>
+
+    <script>
+        class BreathingApp {
+            constructor() {
+                this.isActive = true;
+                this.currentPhase = 'prepare';
+                this.currentInterval = null;
+                
+                this.elements = {
+                    breathingMandala: document.getElementById('breathingMandala'),
+                    phaseIndicator: document.getElementById('phaseIndicator'),
+                    instruction: document.getElementById('instruction'),
+                    counter: document.getElementById('counter')
+                };
+                
+                this.startSession();
+            }
+
+            updateCounter(count) {
+                this.elements.counter.textContent = count || '';
+            }
+
+            updateInstruction(text) {
+                this.elements.instruction.textContent = text;
+            }
+
+            updatePhaseIndicator(phase, text) {
+                this.elements.phaseIndicator.className = `phase-indicator ${phase}`;
+                this.elements.phaseIndicator.textContent = text;
+            }
+
+            activateVisualElements(phase) {
+                // Reset mandala
+                this.elements.breathingMandala.className = 'breathing-mandala';
+
+                // Add phase-specific class
+                if (phase) {
+                    this.elements.breathingMandala.classList.add(phase);
+                }
+            }
+
+            countdown(duration, callback) {
+                if (!this.isActive) return;
+                
+                let timeLeft = duration;
+                this.updateCounter(timeLeft);
+                
+                this.currentInterval = setInterval(() => {
+                    timeLeft--;
+                    this.updateCounter(timeLeft);
+                    
+                    if (timeLeft <= 0) {
+                        clearInterval(this.currentInterval);
+                        if (callback && this.isActive) {
+                            callback();
+                        }
+                    }
+                }, 1000);
+            }
+
+            inhalePhase() {
+                this.currentPhase = 'inhale';
+                this.activateVisualElements('inhale');
+                this.updatePhaseIndicator('inhale', 'Inhale');
+                this.updateInstruction('Breathe in slowly through your nose');
+                this.countdown(5, () => this.hold1Phase());
+            }
+
+            hold1Phase() {
+                this.currentPhase = 'hold1';
+                this.activateVisualElements('hold1');
+                this.updatePhaseIndicator('hold1', 'Hold');
+                this.updateInstruction('Hold your breath gently');
+                this.countdown(5, () => this.exhalePhase());
+            }
+
+            exhalePhase() {
+                this.currentPhase = 'exhale';
+                this.activateVisualElements('exhale');
+                this.updatePhaseIndicator('exhale', 'Exhale');
+                this.updateInstruction('Breathe out slowly through your mouth');
+                this.countdown(5, () => this.hold2Phase());
+            }
+
+            hold2Phase() {
+                this.currentPhase = 'hold2';
+                this.activateVisualElements('hold2');
+                this.updatePhaseIndicator('hold2', 'Rest');
+                this.updateInstruction('Rest with empty lungs');
+                this.countdown(5, () => this.nextCycle());
+            }
+
+            nextCycle() {
+                this.activateVisualElements('');
+                this.updatePhaseIndicator('', 'Prepare');
+                this.updateInstruction('Prepare for next breath');
+                this.updateCounter('');
+                
+                setTimeout(() => {
+                    if (this.isActive) {
+                        this.inhalePhase();
+                    }
+                }, 1000);
+            }
+
+            startSession() {
+                // Start with a preparation phase
+                setTimeout(() => {
+                    if (this.isActive) {
+                        this.inhalePhase();
+                    }
+                }, 2000);
+            }
+        }
+
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new BreathingApp();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5-4-3-2</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+            overflow: hidden;
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            padding: 20px;
+            z-index: 10;
+        }
+        
+        h1 {
+            font-weight: 300;
+            margin-bottom: 40px;
+            font-size: 28px;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .breath-container {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            margin: 0 auto 40px;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+            opacity: 0.8;
+            transition: transform 0.1s ease-out;
+        }
+        
+        .circle-1 {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, #ff9a9e 0%, #fad0c4 100%);
+            box-shadow: 0 0 50px rgba(255,154,158,0.4);
+        }
+        
+        .circle-2 {
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, #a1c4fd 0%, #c2e9fb 100%);
+            box-shadow: 0 0 40px rgba(161,196,253,0.4);
+        }
+        
+        .circle-3 {
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, #84fab0 0%, #8fd3f4 100%);
+            box-shadow: 0 0 30px rgba(132,250,176,0.4);
+        }
+        
+        .circle-4 {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #f6d365 0%, #fda085 100%);
+            box-shadow: 0 0 20px rgba(246,211,101,0.4);
+        }
+        
+        .circle-5 {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #a18cd1 0%, #fbc2eb 100%);
+            box-shadow: 0 0 15px rgba(161,140,209,0.4);
+        }
+        
+        .instruction {
+            font-size: 36px;
+            margin-bottom: 20px;
+            min-height: 50px;
+            color: #fff;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .timer {
+            font-size: 80px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 25px rgba(255,255,255,0.7);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-feature-settings: 'tnum';
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            animation: float linear infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        .breath-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 28px;
+            height: 28px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            z-index: 10;
+            transition: transform 0.1s ease-out;
+        }
+        
+        .phase-inhale .instruction { color: #84fab0; }
+        .phase-hold1 .instruction { color: #a1c4fd; }
+        .phase-exhale .instruction { color: #ff9a9e; }
+        .phase-hold2 .instruction { color: #f6d365; }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container" id="container">
+        <h1>5-4-3-2 Breathing</h1>
+        
+        <div class="breath-container">
+            <div class="circle circle-1"></div>
+            <div class="circle circle-2"></div>
+            <div class="circle circle-3"></div>
+            <div class="circle circle-4"></div>
+            <div class="circle circle-5"></div>
+            <div class="breath-indicator"></div>
+        </div>
+        
+        <div class="instruction" id="instruction">Get Ready</div>
+        <div class="timer" id="timer">3</div>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const instruction = document.getElementById('instruction');
+        const timer = document.getElementById('timer');
+        const particlesContainer = document.getElementById('particles');
+        const circles = document.querySelectorAll('.circle');
+        const indicator = document.querySelector('.breath-indicator');
+        
+        // Create floating particles
+        function createParticles() {
+            const particleCount = 15;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 30;
+                const duration = Math.random() * 40 + 30;
+                const opacity = Math.random() * 0.3 + 0.1;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.opacity = opacity;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+        
+        // Animation scales for each circle and indicator
+        const initialScales = [0.7, 0.6, 0.5, 0.4, 0.3, 0.8]; // Last one is for indicator
+        const maxScales = [1.5, 1.4, 1.3, 1.2, 1.1, 2.2]; // Last one is for indicator
+        const minScales = [0.3, 0.2, 0.15, 0.1, 0.05, 0.2]; // Last one is for indicator
+        
+        // Set initial positions
+        function setInitialScale() {
+            circles.forEach((circle, index) => {
+                circle.style.transform = `translate(-50%, -50%) scale(${initialScales[index]})`;
+            });
+            indicator.style.transform = `translate(-50%, -50%) scale(${initialScales[5]})`;
+        }
+        
+        setInitialScale();
+        
+        // Animate to target scale over duration
+        function animateToScale(targetScales, duration) {
+            const startTime = Date.now();
+            const startScales = [];
+            
+            // Get current scales
+            circles.forEach((circle, index) => {
+                const transform = circle.style.transform;
+                const scaleMatch = transform.match(/scale\(([^)]+)\)/);
+                startScales[index] = scaleMatch ? parseFloat(scaleMatch[1]) : initialScales[index];
+            });
+            
+            // Get indicator current scale
+            const indicatorTransform = indicator.style.transform;
+            const indicatorScaleMatch = indicatorTransform.match(/scale\(([^)]+)\)/);
+            startScales[5] = indicatorScaleMatch ? parseFloat(indicatorScaleMatch[1]) : initialScales[5];
+            
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / (duration * 1000), 1);
+                
+                // Smooth easing function
+                const eased = progress < 0.5 
+                    ? 2 * progress * progress 
+                    : -1 + (4 - 2 * progress) * progress;
+                
+                circles.forEach((circle, index) => {
+                    const currentScale = startScales[index] + (targetScales[index] - startScales[index]) * eased;
+                    circle.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
+                });
+                
+                // Animate indicator
+                const indicatorScale = startScales[5] + (targetScales[5] - startScales[5]) * eased;
+                indicator.style.transform = `translate(-50%, -50%) scale(${indicatorScale})`;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            
+            animate();
+        }
+        
+        // 5-4-3-2 Breathing phases
+        const phases = [
+            { 
+                name: 'inhale',
+                instruction: 'Inhale', 
+                duration: 5,
+                className: 'phase-inhale',
+                animate: true,
+                targetScales: maxScales
+            },
+            { 
+                name: 'hold1',
+                instruction: 'Hold', 
+                duration: 4,
+                className: 'phase-hold1',
+                animate: false,
+                targetScales: maxScales
+            },
+            { 
+                name: 'exhale',
+                instruction: 'Exhale', 
+                duration: 3,
+                className: 'phase-exhale',
+                animate: true,
+                targetScales: minScales
+            },
+            { 
+                name: 'hold2',
+                instruction: 'Hold', 
+                duration: 2,
+                className: 'phase-hold2',
+                animate: false,
+                targetScales: minScales
+            }
+        ];
+        
+        let currentPhaseIndex = 0;
+        let isRunning = false;
+        let currentAnimationFrame = null;
+        
+        function smoothTimer(startTime, duration, callback) {
+            function updateTimer() {
+                const elapsed = (Date.now() - startTime) / 1000;
+                const remaining = Math.max(0, duration - elapsed);
+                
+                // Display remaining time with one decimal precision for smoothness
+                if (remaining >= 1) {
+                    timer.textContent = Math.ceil(remaining);
+                } else if (remaining > 0) {
+                    timer.textContent = Math.ceil(remaining);
+                } else {
+                    timer.textContent = '0';
+                }
+                
+                if (remaining > 0) {
+                    currentAnimationFrame = requestAnimationFrame(updateTimer);
+                } else {
+                    if (callback) callback();
+                }
+            }
+            
+            updateTimer();
+        }
+        
+        function startBreathingCycle() {
+            isRunning = true;
+            runPhase();
+        }
+        
+        function runPhase() {
+            if (!isRunning) return;
+            
+            const phase = phases[currentPhaseIndex];
+            const startTime = Date.now();
+            
+            // Update instruction and visual state
+            instruction.textContent = phase.instruction;
+            
+            // Remove all phase classes and add current one
+            container.className = 'container';
+            container.classList.add(phase.className);
+            
+            // Start animation if needed
+            if (phase.animate) {
+                animateToScale(phase.targetScales, phase.duration);
+            }
+            
+            // Start smooth countdown timer
+            smoothTimer(startTime, phase.duration, () => {
+                // Move to next phase
+                currentPhaseIndex = (currentPhaseIndex + 1) % phases.length;
+                
+                // After exhale phase, add a smooth transition back to initial state
+                if (currentPhaseIndex === 0) {
+                    // Brief pause before starting next cycle
+                    animateToScale(initialScales, 0.5);
+                    setTimeout(runPhase, 500);
+                } else {
+                    // Continue to next phase immediately
+                    setTimeout(runPhase, 100);
+                }
+            });
+        }
+        
+        // Countdown before starting
+        let countdown = 3;
+        const startTime = Date.now();
+        
+        function initialCountdown() {
+            const elapsed = (Date.now() - startTime) / 1000;
+            const remaining = Math.max(0, 3 - elapsed);
+            
+            if (remaining > 2) {
+                timer.textContent = '3';
+            } else if (remaining > 1) {
+                timer.textContent = '2';
+            } else if (remaining > 0) {
+                timer.textContent = '1';
+            } else {
+                instruction.textContent = 'Begin';
+                timer.textContent = '';
+                setTimeout(startBreathingCycle, 1000);
+                return;
+            }
+            
+            requestAnimationFrame(initialCountdown);
+        }
+        
+        initialCountdown();
+    </script>
+</body>
+</html>

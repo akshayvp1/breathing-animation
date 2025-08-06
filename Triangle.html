@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triangle Breathing Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .title {
+            font-size: 2.8rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            color: white;
+            text-align: center;
+            letter-spacing: 1px;
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .breathing-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .triangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            transition: all ease-in-out;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .triangle-1 {
+            border-left: 120px solid transparent;
+            border-right: 120px solid transparent;
+            border-bottom: 210px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .triangle-2 {
+            border-left: 105px solid transparent;
+            border-right: 105px solid transparent;
+            border-bottom: 183px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .triangle-3 {
+            border-left: 90px solid transparent;
+            border-right: 90px solid transparent;
+            border-bottom: 156px solid rgba(139, 92, 246, 0.4);
+        }
+
+        .triangle-4 {
+            border-left: 75px solid transparent;
+            border-right: 75px solid transparent;
+            border-bottom: 130px solid rgba(168, 85, 247, 0.5);
+        }
+
+        .triangle-5 {
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 105px solid rgba(196, 181, 253, 0.6);
+        }
+
+        .triangle-6 {
+            border-left: 45px solid transparent;
+            border-right: 45px solid transparent;
+            border-bottom: 78px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .instruction {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: white;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .counter-display {
+            position: fixed;
+            bottom: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3.2rem;
+            font-weight: 300;
+            color: #60a5fa;
+            text-align: center;
+        }
+
+        /* Animation states */
+        .inhale .triangle {
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        .hold .triangle {
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+        .exhale .triangle {
+            transform: translate(-50%, -50%) scale(0.7);
+        }
+
+        .hold-empty .triangle {
+            transform: translate(-50%, -50%) scale(0.7);
+        }
+
+        .background-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            animation: breatheGlow 12s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes breatheGlow {
+            0%, 33.33% { 
+                opacity: 0.3; 
+                transform: translate(-50%, -50%) scale(1); 
+            }
+            16.66% { 
+                opacity: 0.6; 
+                transform: translate(-50%, -50%) scale(1.3); 
+            }
+            66.66%, 100% { 
+                opacity: 0.3; 
+                transform: translate(-50%, -50%) scale(1); 
+            }
+            83.33% { 
+                opacity: 0.2; 
+                transform: translate(-50%, -50%) scale(0.8); 
+            }
+        }
+
+        .breathing-guide {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            z-index: 5;
+        }
+
+        .dot-indicator {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: #60a5fa;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #60a5fa;
+            transition: all ease-in-out;
+            z-index: 10;
+            top: 50%;
+            left: 50%;
+        }
+
+        .inhale .dot-indicator {
+            animation: moveTriangleBottom 4s ease-in-out;
+        }
+
+        .hold .dot-indicator {
+            animation: moveTriangleRight 4s ease-in-out;
+        }
+
+        .exhale .dot-indicator {
+            animation: moveTriangleLeft 4s ease-in-out;
+        }
+
+        .hold-empty .dot-indicator {
+            animation: stayAtStart 4s ease-in-out;
+        }
+
+        @keyframes moveTriangleBottom {
+            0% { transform: translate(-50%, 40px); }
+            100% { transform: translate(40px, 40px); }
+        }
+
+        @keyframes moveTriangleRight {
+            0% { transform: translate(40px, 40px); }
+            100% { transform: translate(-50%, -80px); }
+        }
+
+        @keyframes moveTriangleLeft {
+            0% { transform: translate(-50%, -80px); }
+            100% { transform: translate(-50%, 40px); }
+        }
+
+        @keyframes stayAtStart {
+            0%, 100% { transform: translate(-50%, 40px); }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">Breathing</h1>
+    
+    <div class="breathing-container" id="breathingContainer">
+        <div class="background-glow"></div>
+        
+        <div class="triangle triangle-1"></div>
+        <div class="triangle triangle-2"></div>
+        <div class="triangle triangle-3"></div>
+        <div class="triangle triangle-4"></div>
+        <div class="triangle triangle-5"></div>
+        <div class="triangle triangle-6"></div>
+        
+        <div class="breathing-guide"></div>
+        <div class="dot-indicator" id="dotIndicator"></div>
+        
+        <div class="counter-display" id="counter"></div>
+        <div class="instruction" id="instruction">Breathe</div>
+    </div>
+
+    <script>
+        let breathingInterval;
+        let countdownInterval;
+        let currentPhase = 0;
+        let currentCount = 0;
+
+        const phases = [
+            { name: 'Inhale', duration: 4, class: 'inhale' },
+            { name: 'Hold', duration: 4, class: 'hold' },
+            { name: 'Exhale', duration: 4, class: 'exhale' },
+            { name: 'Hold', duration: 4, class: 'hold-empty' }
+        ];
+
+        const container = document.getElementById('breathingContainer');
+        const instruction = document.getElementById('instruction');
+        const counter = document.getElementById('counter');
+        const triangles = document.querySelectorAll('.triangle');
+
+        function runBreathingCycle() {
+            const phase = phases[currentPhase];
+            const duration = phase.duration * 1000;
+            
+            // Update UI
+            instruction.textContent = phase.name;
+            
+            // Apply animation class
+            container.className = `breathing-container ${phase.class}`;
+            
+            // Set transition duration for all triangles
+            triangles.forEach(triangle => {
+                triangle.style.transitionDuration = `${phase.duration}s`;
+            });
+            
+            // Countdown (outside triangle)
+            currentCount = phase.duration;
+            counter.textContent = currentCount;
+            
+            countdownInterval = setInterval(() => {
+                currentCount--;
+                counter.textContent = currentCount || '';
+                
+                if (currentCount <= 0) {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
+
+            // Next phase
+            breathingInterval = setTimeout(() => {
+                currentPhase = (currentPhase + 1) % 3;
+                runBreathingCycle();
+            }, duration);
+        }
+
+        function startBreathing() {
+            currentPhase = 0;
+            runBreathingCycle();
+        }
+
+        // Start automatically
+        setTimeout(startBreathing, 1000);
+    </script>
+</body>
+</html>
