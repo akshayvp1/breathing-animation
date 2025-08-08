@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Techniques</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-btn {
+            font-size: 24px;
+            margin-right: 20px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .wellness-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .wellness-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .wellness-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card-visual {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            position: relative;
+            border-radius: 15px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        /* Number styles */
+        .number-block {
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .num-large { width: 40px; height: 40px; font-size: 24px; }
+        .num-medium { width: 35px; height: 35px; font-size: 20px; }
+        .num-small { width: 25px; height: 25px; font-size: 16px; }
+        .num-mini { width: 20px; height: 20px; font-size: 14px; }
+
+        /* Shape styles */
+        .triangle { width: 0; height: 0; border-left: 30px solid transparent; border-right: 30px solid transparent; border-bottom: 50px solid; opacity: 0.8; }
+        .circle { border-radius: 50%; }
+        .square { border-radius: 6px; }
+        .droplet { border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; }
+
+        /* Background gradients */
+        .bg-yellow { background: linear-gradient(135deg, #fff9c4 0%, #f5f5dc 100%); }
+        .bg-blue { background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%); }
+        .bg-pink { background: linear-gradient(135deg, #ffe0e6 0%, #ffb3ba 100%); }
+        .bg-green { background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%); }
+        .bg-purple { background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); }
+        .bg-orange { background: linear-gradient(135deg, #fff3e0 0%, #ffcc02 100%); }
+        .bg-teal { background: linear-gradient(135deg, #e0f2f1 0%, #80cbc4 100%); }
+        .bg-red { background: linear-gradient(135deg, #ffebee 0%, #ef5350 100%); }
+        .bg-indigo { background: linear-gradient(135deg, #e8eaf6 0%, #7986cb 100%); }
+        .bg-cyan { background: linear-gradient(135deg, #e0f7fa 0%, #26c6da 100%); }
+
+        /* Color classes for shapes */
+        .color-green { background: #90EE90; }
+        .color-blue { background: #87CEEB; }
+        .color-purple { background: #DDA0DD; }
+        .color-pink { background: #FFB6C1; }
+        .color-yellow { background: #F0E68C; }
+        .color-orange { background: #FFA07A; }
+        .color-teal { background: #20B2AA; }
+        .color-red { background: #FF6B6B; }
+        .color-indigo { background: #6366F1; }
+        .color-cyan { background: #22D3EE; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="back-btn">←</div>
+        <h1 class="header-title">Wellness Techniques</h1>
+    </div>
+
+    <div class="container">
+        <div class="wellness-grid">
+            <!-- 1. 4-7-8 Breathing -->
+            <div class="wellness-card">
+                <div class="card-visual bg-yellow">
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                        <div class="number-block num-large color-green">4</div>
+                        <div class="number-block num-medium color-blue">7</div>
+                        <div class="number-block num-large color-purple">8</div>
+                    </div>
+                </div>
+                <h3 class="card-title">4-7-8 Breathing</h3>
+            </div>
+
+            <!-- 2. Grounding Exercise (5-4-3-2-1) -->
+            <div class="wellness-card">
+                <div class="card-visual bg-blue">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; width: 80%;">
+                        <div class="number-block num-small color-green">5</div>
+                        <div class="number-block num-small color-pink">4</div>
+                        <div class="number-block num-small color-purple">3</div>
+                        <div class="number-block num-small color-yellow">2</div>
+                        <div class="number-block num-small color-blue">1</div>
+                    </div>
+                </div>
+                <h3 class="card-title">Grounding Exercise (5-4-3-2-1)</h3>
+            </div>
+
+            <!-- 3. Progressive Muscle Relaxation -->
+            <div class="wellness-card">
+                <div class="card-visual bg-pink">
+                    <div style="display: flex; gap: 8px;">
+                        <div style="width: 30px; height: 40px;" class="square color-orange"></div>
+                        <div style="width: 25px; height: 35px;" class="square color-teal"></div>
+                        <div style="width: 35px; height: 30px;" class="square color-pink"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Progressive Muscle Relaxation</h3>
+            </div>
+
+            <!-- 4. Cold Water Splash or Ice Hold -->
+            <div class="wellness-card">
+                <div class="card-visual bg-cyan">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="width: 25px; height: 35px;" class="droplet color-blue"></div>
+                        <div style="width: 30px; height: 40px;" class="droplet color-cyan"></div>
+                        <div style="width: 20px; height: 30px;" class="droplet color-teal"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Cold Water Splash or Ice Hold</h3>
+            </div>
+
+            <!-- 5. Soothing Visualization -->
+            <div class="wellness-card">
+                <div class="card-visual bg-purple">
+                    <div style="display: flex; gap: 10px;">
+                        <div style="width: 25px; height: 25px;" class="circle color-purple"></div>
+                        <div style="width: 30px; height: 30px;" class="circle color-pink"></div>
+                        <div style="width: 20px; height: 20px;" class="circle color-blue"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Soothing Visualization</h3>
+            </div>
+
+            <!-- 6. Box Breathing (4-4-4-4 Technique) -->
+            <div class="wellness-card">
+                <div class="card-visual bg-green">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <div class="number-block num-medium color-green">4</div>
+                        <div class="number-block num-medium color-blue">4</div>
+                        <div class="number-block num-medium color-purple">4</div>
+                        <div class="number-block num-medium color-orange">4</div>
+                    </div>
+                </div>
+                <h3 class="card-title">Box Breathing (4-4-4-4 Technique)</h3>
+            </div>
+
+            <!-- 7. The "5-5-5" Technique -->
+            <div class="wellness-card">
+                <div class="card-visual bg-orange">
+                    <div style="display: flex; gap: 8px;">
+                        <div class="number-block num-large color-yellow">5</div>
+                        <div class="number-block num-large color-orange">5</div>
+                        <div class="number-block num-large color-red">5</div>
+                    </div>
+                </div>
+                <h3 class="card-title">The "5-5-5" Technique</h3>
+            </div>
+
+            <!-- 8. Butterfly Hug (Self-Soothing Touch) -->
+            <div class="wellness-card">
+                <div class="card-visual bg-pink">
+                    <div style="display: flex; gap: 5px;">
+                        <div class="triangle" style="border-bottom-color: #FFB6C1;"></div>
+                        <div class="triangle" style="border-bottom-color: #DDA0DD; transform: scaleX(-1);"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Butterfly Hug (Self-Soothing Touch)</h3>
+            </div>
+
+            <!-- 9. Use a Scent (Aromatherapy Hack) -->
+            <div class="wellness-card">
+                <div class="card-visual bg-purple">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="width: 20px; height: 30px;" class="droplet color-purple"></div>
+                        <div style="width: 25px; height: 35px;" class="droplet color-pink"></div>
+                        <div style="width: 18px; height: 28px;" class="droplet color-blue"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Use a Scent (Aromatherapy Hack)</h3>
+            </div>
+
+            <!-- 10. Say a Grounding Phrase Aloud -->
+            <div class="wellness-card">
+                <div class="card-visual bg-teal">
+                    <div style="display: flex; gap: 8px;">
+                        <div style="width: 25px; height: 15px; border-radius: 10px;" class="color-teal"></div>
+                        <div style="width: 35px; height: 15px; border-radius: 10px;" class="color-blue"></div>
+                        <div style="width: 20px; height: 15px; border-radius: 10px;" class="color-green"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Say a Grounding Phrase Aloud</h3>
+            </div>
+
+            <!-- 11. Change Your Environment (Light & Air) -->
+            <div class="wellness-card">
+                <div class="card-visual bg-yellow">
+                    <div style="display: flex; gap: 10px;">
+                        <div style="width: 30px; height: 30px;" class="circle color-yellow"></div>
+                        <div style="width: 25px; height: 25px;" class="square color-blue"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Change Your Environment (Light & Air)</h3>
+            </div>
+
+            <!-- 12. Body Movement Reset -->
+            <div class="wellness-card">
+                <div class="card-visual bg-green">
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                        <div style="width: 20px; height: 40px;" class="square color-green"></div>
+                        <div style="width: 30px; height: 30px;" class="square color-teal"></div>
+                        <div style="width: 25px; height: 35px;" class="square color-blue"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Body Movement Reset</h3>
+            </div>
+
+            <!-- 13. "Name One Good Thing" Technique -->
+            <div class="wellness-card">
+                <div class="card-visual bg-orange">
+                    <div class="number-block num-large color-orange" style="border-radius: 50%;">1</div>
+                </div>
+                <h3 class="card-title">"Name One Good Thing" Technique</h3>
+            </div>
+
+            <!-- 14. Warm Touch or Pressure -->
+            <div class="wellness-card">
+                <div class="card-visual bg-red">
+                    <div style="display: flex; gap: 8px;">
+                        <div style="width: 30px; height: 30px;" class="circle color-red"></div>
+                        <div style="width: 25px; height: 25px;" class="circle color-orange"></div>
+                        <div style="width: 35px; height: 35px;" class="circle color-yellow"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Warm Touch or Pressure</h3>
+            </div>
+
+            <!-- 15. Music Medicine -->
+            <div class="wellness-card">
+                <div class="card-visual bg-indigo">
+                    <div style="display: flex; gap: 3px; align-items: end;">
+                        <div style="width: 15px; height: 20px;" class="square color-indigo"></div>
+                        <div style="width: 15px; height: 35px;" class="square color-purple"></div>
+                        <div style="width: 15px; height: 25px;" class="square color-blue"></div>
+                        <div style="width: 15px; height: 40px;" class="square color-cyan"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Music Medicine</h3>
+            </div>
+
+            <!-- 16. The STOP Technique -->
+            <div class="wellness-card">
+                <div class="card-visual bg-red">
+                    <div style="width: 50px; height: 50px; background: #FF6B6B; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: bold;">STOP</div>
+                </div>
+                <h3 class="card-title">The STOP Technique</h3>
+            </div>
+
+            <!-- 17. Ice Water Trick -->
+            <div class="wellness-card">
+                <div class="card-visual bg-cyan">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="width: 20px; height: 20px;" class="square color-cyan"></div>
+                        <div style="width: 25px; height: 25px;" class="square color-blue"></div>
+                        <div style="width: 30px; height: 30px;" class="square color-teal"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Ice Water Trick</h3>
+            </div>
+
+            <!-- 18. Lion's Breath (Simhasana) -->
+            <div class="wellness-card">
+                <div class="card-visual bg-orange">
+                    <div class="triangle" style="border-bottom-color: #FFA07A; border-left-width: 35px; border-right-width: 35px; border-bottom-width: 55px;"></div>
+                </div>
+                <h3 class="card-title">Lion's Breath (Simhasana)</h3>
+            </div>
+
+            <!-- 19. "Walk it Off" Method -->
+            <div class="wellness-card">
+                <div class="card-visual bg-green">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="width: 15px; height: 30px;" class="square color-green"></div>
+                        <div style="width: 15px; height: 25px;" class="square color-teal"></div>
+                        <div style="width: 15px; height: 35px;" class="square color-blue"></div>
+                        <div style="width: 15px; height: 20px;" class="square color-cyan"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">"Walk it Off" Method</h3>
+            </div>
+
+            <!-- 20. Vent in a Safe Way -->
+            <div class="wellness-card">
+                <div class="card-visual bg-blue">
+                    <div style="display: flex; gap: 8px;">
+                        <div style="width: 25px; height: 15px; border-radius: 10px;" class="color-blue"></div>
+                        <div style="width: 30px; height: 15px; border-radius: 10px;" class="color-teal"></div>
+                        <div style="width: 35px; height: 15px; border-radius: 10px;" class="color-cyan"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Vent in a Safe Way</h3>
+            </div>
+
+            <!-- Continue with remaining 30 cards... -->
+            <!-- 21. Hand-on-Heart Breathing -->
+            <div class="wellness-card">
+                <div class="card-visual bg-pink">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <div style="width: 30px; height: 25px; background: #FFB6C1; border-radius: 15px 15px 0 0; transform: rotate(-45deg);"></div>
+                        <div style="width: 30px; height: 25px; background: #DDA0DD; border-radius: 15px 15px 0 0; transform: rotate(45deg);"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Hand-on-Heart Breathing</h3>
+            </div>
+
+            <!-- 22. "Pause & Label" the Feeling -->
+            <div class="wellness-card">
+                <div class="card-visual bg-purple">
+                    <div style="display: flex; gap: 8px;">
+                        <div style="width: 30px; height: 20px; border-radius: 5px;" class="color-purple"></div>
+                        <div style="width: 25px; height: 20px; border-radius: 5px;" class="color-pink"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">"Pause & Label" the Feeling</h3>
+            </div>
+
+            <!-- 23. Physical Reset -->
+            <div class="wellness-card">
+                <div class="card-visual bg-green">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="width: 25px; height: 25px; border-radius: 50%; transform: rotate(45deg);" class="color-green"></div>
+                        <div style="width: 25px; height: 25px;" class="square color-teal"></div>
+                        <div style="width: 25px; height: 25px;" class="triangle" style="border-bottom-color: #20B2AA; border-left-width: 12px; border-right-width: 12px; border-bottom-width: 20px;"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Physical Reset</h3>
+            </div>
+
+            <!-- 24. Write, Don't React -->
+            <div class="wellness-card">
+                <div class="card-visual bg-blue">
+                    <div style="display: flex; gap: 3px;">
+                        <div style="width: 20px; height: 3px;" class="color-blue"></div>
+                        <div style="width: 25px; height: 3px;" class="color-teal"></div>
+                        <div style="width: 30px; height: 3px;" class="color-cyan"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Write, Don't React</h3>
+            </div>
+
+            <!-- 25. Loving-Kindness Flash Meditation -->
+            <div class="wellness-card">
+                <div class="card-visual bg-pink">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="width: 20px; height: 20px;" class="circle color-pink"></div>
+                        <div style="width: 25px; height: 25px;" class="circle color-purple"></div>
+                        <div style="width: 30px; height: 30px;" class="circle color-blue"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Loving-Kindness Flash Meditation</h3>
+            </div>
+
+            <!-- 26-50: Continue with similar pattern for remaining cards -->
+            <!-- 26. 5-Minute Rule -->
+            <div class="wellness-card">
+                <div class="card-visual bg-orange">
+                    <div class="number-block num-large color-orange">5</div>
+                </div>
+                <h3 class="card-title">5-Minute Rule</h3>
+            </div>
+
+            <!-- 27. Body Wake-Up Shake -->
+            <div class="wellness-card">
+                <div class="card-visual bg-green">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="width: 15px; height: 35px; border-radius: 10px;" class="color-green"></div>
+                        <div style="width: 15px; height: 40px; border-radius: 10px;" class="color-teal"></div>
+                        <div style="width: 15px; height: 30px; border-radius: 10px;" class="color-blue"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Body Wake-Up Shake</h3>
+            </div>
+
+            <!-- 28. Breathe & Visualize Success -->
+            <div class="wellness-card">
+                <div class="card-visual bg-yellow">
+                    <div style="display: flex; gap: 8px;">
+                        <div style="width: 25px; height: 25px;" class="circle color-yellow"></div>
+                        <div class="triangle" style="border-bottom-color: #F0E68C; border-left-width: 15px; border-right-width: 15px; border-bottom-width: 25px;"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Breathe & Visualize Success</h3>
+            </div>
+
+            <!-- 29. One-Minute Mind Dump -->
+            <div class="wellness-card">
+                <div class="card-visual bg-purple">
+                    <div class="number-block num-large color-purple">1</div>
+                </div>
+                <h3 class="card-title">One-Minute Mind Dump</h3>
+            </div>
+
+            <!-- 30. Set a 10-Minute Focus Timer -->
+            <div class="wellness-card">
+                <div class="card-visual bg-red">
+                    <div style="display: flex; gap: 5px;">
+                        <div class="number-block num-medium color-red">1</div>
+                        <div class="number-block num-medium color-orange">0</div>
+                    </div>
+                </div>
+                <h3 class="card-title">Set a 10-Minute Focus Timer (Pomodoro Lite)</h3>
+            </div>
+
+            <!-- 31-50: Continue with remaining techniques -->
+            <!-- 31. Color Breathing -->
+            <div class="wellness-card">
+                <div class="card-visual bg-indigo">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="width: 20px; height: 20px;" class="circle color-red"></div>
+                        <div style="width: 20px; height: 20px;" class="circle color-yellow"></div>
+                        <div style="width: 20px; height: 20px;" class="circle color-blue"></div>
+                        <div style="width: 20px; height: 20px;" class="circle color-green"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Color Breathing</h3>
+            </div>
+
+            <!-- 32. Temperature Shift -->
+            <div class="wellness-card">
+                <div class="card-visual bg-cyan">
+                    <div style="display: flex; gap: 10px;">
+                        <div style="width: 25px; height: 25px;" class="square color-blue"></div>
+                        <div style="width: 25px; height: 25px;" class="square color-red"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Temperature Shift</h3>
+            </div>
+
+            <!-- 33. One-Word Check-In -->
+            <div class="wellness-card">
+                <div class="card-visual bg-teal">
+                    <div class="number-block num-large color-teal">1</div>
+                </div>
+                <h3 class="card-title">One-Word Check-In</h3>
+            </div>
+
+            <!-- 34. Grounding Object -->
+            <div class="wellness-card">
+                <div class="card-visual bg-green">
+                    <div style="width: 40px; height: 30px; border-radius: 20px;" class="color-green"></div>
+                </div>
+                <h3 class="card-title">Grounding Object</h3>
+            </div>
+
+            <!-- 35. Music Match & Shift -->
+            <div class="wellness-card">
+                <div class="card-visual bg-indigo">
+                    <div style="display: flex; gap: 3px; align-items: end;">
+                        <div style="width: 12px; height: 25px;" class="square color-indigo"></div>
+                        <div style="width: 12px; height: 35px;" class="square color-purple"></div>
+                        <div style="width: 12px; height: 20px;" class="square color-pink"></div>
+                        <div style="width: 12px; height: 30px;" class="square color-blue"></div>
+                        <div style="width: 12px; height: 40px;" class="square color-cyan"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Music Match & Shift</h3>
+            </div>
+
+            <!-- 36. 4-7-8 Sleep Breathing -->
+            <div class="wellness-card">
+                <div class="card-visual bg-purple">
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                        <div class="number-block num-medium color-purple">4</div>
+                        <div class="number-block num-medium color-blue">7</div>
+                        <div class="number-block num-medium color-indigo">8</div>
+                        <div style="width: 20px; height: 20px;" class="circle color-yellow"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">4-7-8 Sleep Breathing</h3>
+            </div>
+
+            <!-- 37. The "Body Scan" Wind-Down -->
+            <div class="wellness-card">
+                <div class="card-visual bg-blue">
+                    <div style="display: flex; gap: 3px;">
+                        <div style="width: 15px; height: 40px;" class="square color-blue"></div>
+                        <div style="width: 15px; height: 35px;" class="square color-teal"></div>
+                        <div style="width: 15px; height: 30px;" class="square color-cyan"></div>
+                        <div style="width: 15px; height: 25px;" class="square color-green"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">The "Body Scan" Wind-Down</h3>
+            </div>
+
+            <!-- 38. White or Brown Noise -->
+            <div class="wellness-card">
+                <div class="card-visual bg-teal">
+                    <div style="display: flex; gap: 2px;">
+                        <div style="width: 8px; height: 20px;" class="square color-teal"></div>
+                        <div style="width: 8px; height: 25px;" class="square color-blue"></div>
+                        <div style="width: 8px; height: 30px;" class="square color-cyan"></div>
+                        <div style="width: 8px; height: 35px;" class="square color-green"></div>
+                        <div style="width: 8px; height: 25px;" class="square color-blue"></div>
+                        <div style="width: 8px; height: 20px;" class="square color-teal"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">White or Brown Noise</h3>
+            </div>
+
+            <!-- 39. Thought Parking -->
+            <div class="wellness-card">
+                <div class="card-visual bg-yellow">
+                    <div style="display: flex; gap: 8px;">
+                        <div style="width: 30px; height: 20px; border-radius: 5px;" class="color-yellow"></div>
+                        <div style="width: 25px; height: 20px; border-radius: 5px;" class="color-orange"></div>
+                        <div style="width: 35px; height: 20px; border-radius: 5px;" class="color-red"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Thought Parking</h3>
+            </div>
+
+            <!-- 40. Lavender Scent or Oil Dab -->
+            <div class="wellness-card">
+                <div class="card-visual bg-purple">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="width: 20px; height: 30px;" class="droplet color-purple"></div>
+                        <div style="width: 25px; height: 35px;" class="droplet color-indigo"></div>
+                        <div style="width: 18px; height: 28px;" class="droplet color-pink"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Lavender Scent or Oil Dab</h3>
+            </div>
+
+            <!-- 41. 20-20-20 Rule (Eye & Mind Reset) -->
+            <div class="wellness-card">
+                <div class="card-visual bg-blue">
+                    <div style="display: flex; gap: 5px;">
+                        <div class="number-block num-medium color-blue">20</div>
+                        <div class="number-block num-medium color-teal">20</div>
+                        <div class="number-block num-medium color-cyan">20</div>
+                    </div>
+                </div>
+                <h3 class="card-title">20-20-20 Rule (Eye & Mind Reset)</h3>
+            </div>
+
+            <!-- 42. Digital Detox Breath -->
+            <div class="wellness-card">
+                <div class="card-visual bg-green">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <div style="width: 25px; height: 35px; border-radius: 5px;" class="color-green"></div>
+                        <div style="width: 30px; height: 2px;" class="color-red"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Digital Detox Breath</h3>
+            </div>
+
+            <!-- 43. Palm Press Technique -->
+            <div class="wellness-card">
+                <div class="card-visual bg-pink">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="width: 25px; height: 35px; border-radius: 15px 15px 5px 5px;" class="color-pink"></div>
+                        <div style="width: 25px; height: 35px; border-radius: 15px 15px 5px 5px;" class="color-purple"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Palm Press Technique</h3>
+            </div>
+
+            <!-- 44. Nature Focus Break -->
+            <div class="wellness-card">
+                <div class="card-visual bg-green">
+                    <div style="display: flex; gap: 8px;">
+                        <div class="triangle" style="border-bottom-color: #90EE90; border-left-width: 15px; border-right-width: 15px; border-bottom-width: 25px;"></div>
+                        <div style="width: 20px; height: 20px;" class="circle color-yellow"></div>
+                        <div style="width: 25px; height: 15px; border-radius: 10px;" class="color-blue"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Nature Focus Break</h3>
+            </div>
+
+            <!-- 45. Touch Something Real -->
+            <div class="wellness-card">
+                <div class="card-visual bg-orange">
+                    <div style="display: flex; gap: 8px;">
+                        <div style="width: 25px; height: 25px; border-radius: 50%;" class="color-orange"></div>
+                        <div style="width: 30px; height: 20px; border-radius: 10px;" class="color-yellow"></div>
+                        <div style="width: 20px; height: 30px;" class="square color-red"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Touch Something Real</h3>
+            </div>
+
+            <!-- 46. 2-Minute Movement Burst -->
+            <div class="wellness-card">
+                <div class="card-visual bg-red">
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                        <div class="number-block num-large color-red">2</div>
+                        <div style="display: flex; gap: 2px;">
+                            <div style="width: 8px; height: 25px;" class="square color-orange"></div>
+                            <div style="width: 8px; height: 35px;" class="square color-yellow"></div>
+                            <div style="width: 8px; height: 20px;" class="square color-red"></div>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="card-title">2-Minute Movement Burst</h3>
+            </div>
+
+            <!-- 47. Power Posture Reset -->
+            <div class="wellness-card">
+                <div class="card-visual bg-indigo">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="width: 20px; height: 40px;" class="square color-indigo"></div>
+                        <div style="width: 30px; height: 15px;" class="square color-purple"></div>
+                        <div style="width: 20px; height: 40px;" class="square color-blue"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Power Posture Reset</h3>
+            </div>
+
+            <!-- 48. Just One Stretch Rule -->
+            <div class="wellness-card">
+                <div class="card-visual bg-green">
+                    <div style="display: flex; gap: 5px; align-items: center;">
+                        <div class="number-block num-large color-green">1</div>
+                        <div style="width: 25px; height: 5px; border-radius: 10px;" class="color-teal"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Just One Stretch Rule</h3>
+            </div>
+
+            <!-- 49. Visualization Spark -->
+            <div class="wellness-card">
+                <div class="card-visual bg-yellow">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="width: 15px; height: 15px;" class="triangle" style="border-bottom-color: #F0E68C; border-left-width: 7px; border-right-width: 7px; border-bottom-width: 12px;"></div>
+                        <div style="width: 20px; height: 20px;" class="circle color-orange"></div>
+                        <div style="width: 18px; height: 18px;" class="triangle" style="border-bottom-color: #FFA07A; border-left-width: 9px; border-right-width: 9px; border-bottom-width: 15px;"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Visualization Spark</h3>
+            </div>
+
+            <!-- 50. Hydrate & Breathe -->
+            <div class="wellness-card">
+                <div class="card-visual bg-cyan">
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <div style="width: 25px; height: 35px;" class="droplet color-cyan"></div>
+                        <div style="width: 20px; height: 20px;" class="circle color-blue"></div>
+                    </div>
+                </div>
+                <h3 class="card-title">Hydrate & Breathe</h3>
+            </div>
