@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4-4-8-4 Breathing Animation</title>
+    <title>4-4-8-4 Breathing Animation - 9:16</title>
     <style>
         * {
             margin: 0;
@@ -13,154 +13,219 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #e8f4f8 0%, #d1ecf1 100%);
-            color: #333;
-            min-height: 100vh;
+            background: linear-gradient(135deg, #1a2332 0%, #0f1419 100%);
+            color: #e2e8f0;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        /* Strict 9:16 aspect ratio container */
+        .app-container {
+            width: 360px;
+            height: 640px;
+            max-width: 100vw;
+            max-height: calc(100vw * 16 / 9);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, #1a2332 0%, #0f1419 100%);
+            border-radius: 0;
             overflow: hidden;
         }
 
+        /* Ensure it scales proportionally on different screens */
+        @media (max-width: 360px) {
+            .app-container {
+                width: 100vw;
+                height: calc(100vw * 16 / 9);
+            }
+        }
+
+        @media (min-width: 361px) {
+            .app-container {
+                width: min(360px, 100vw);
+                height: min(640px, calc(100vw * 16 / 9));
+            }
+        }
+
         .title {
-            font-size: 2.5rem;
+            position: absolute;
+            top: 80px;
+            font-size: 28px;
             font-weight: bold;
-            margin-bottom: 4rem;
-            color: #2c5f6f;
+            color: #64748b;
             text-align: center;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            z-index: 10;
         }
 
         .breathing-container {
-            position: relative;
-            width: 400px;
-            height: 400px;
+            position: absolute;
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
+            top: 0;
+            left: 0;
         }
 
         .circle {
             position: absolute;
             border-radius: 50%;
-            border: 2px solid #7dd3fc;
             transition: all ease-in-out;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .circle:nth-child(1) {
-            width: 50px;
-            height: 50px;
-            border-color: #0891b2;
-            border-width: 3px;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #1e293b;
         }
 
         .circle:nth-child(2) {
-            width: 80px;
-            height: 80px;
-            border-color: #0e7490;
+            width: 60px;
+            height: 60px;
+            border: 2px solid #334155;
         }
 
         .circle:nth-child(3) {
-            width: 110px;
-            height: 110px;
-            border-color: #155e75;
+            width: 80px;
+            height: 80px;
+            border: 2px solid #475569;
         }
 
         .circle:nth-child(4) {
-            width: 140px;
-            height: 140px;
-            border-color: #164e63;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #64748b;
         }
 
         .circle:nth-child(5) {
-            width: 170px;
-            height: 170px;
-            border-color: #1e3a8a;
+            width: 120px;
+            height: 120px;
+            border: 2px solid #1e3a8a;
         }
 
         .circle:nth-child(6) {
-            width: 200px;
-            height: 200px;
-            border-color: #1d4ed8;
+            width: 140px;
+            height: 140px;
+            border: 2px solid #1d4ed8;
         }
 
         .circle:nth-child(7) {
-            width: 230px;
-            height: 230px;
-            border-color: #2563eb;
+            width: 160px;
+            height: 160px;
+            border: 2px solid #2563eb;
         }
 
         .circle:nth-child(8) {
-            width: 260px;
-            height: 260px;
-            border-color: #3b82f6;
+            width: 180px;
+            height: 180px;
+            border: 2px solid #1e40af;
         }
 
         .circle:nth-child(9) {
-            width: 290px;
-            height: 290px;
-            border-color: #60a5fa;
+            width: 200px;
+            height: 200px;
+            border: 2px solid #1d4ed8;
         }
 
         .circle:nth-child(10) {
-            width: 320px;
-            height: 320px;
-            border-color: #93c5fd;
+            width: 220px;
+            height: 220px;
+            border: 2px solid #3730a3;
         }
 
         .inhale {
-            transform: scale(1.5);
+            transform: translate(-50%, -50%) scale(1.4);
         }
 
         .hold {
-            transform: scale(1.5);
+            transform: translate(-50%, -50%) scale(1.4);
         }
 
         .exhale {
-            transform: scale(0.6);
+            transform: translate(-50%, -50%) scale(0.6);
         }
 
         .hold-empty {
-            transform: scale(0.6);
+            transform: translate(-50%, -50%) scale(0.6);
+        }
+
+        /* Text container moved to bottom */
+        .text-container {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            text-align: center;
+            pointer-events: none;
         }
 
         .instruction {
-            position: absolute;
-            bottom: -80px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.8rem;
+            font-size: 36px;
             font-weight: 600;
-            color: #2c5f6f;
-            text-align: center;
+            color: #64748b;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
         }
 
         .counter {
-            position: absolute;
-            font-size: 4rem;
+            font-size: 72px;
             font-weight: bold;
-            color: #0891b2;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: #374151;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+            line-height: 1;
+        }
+
+        /* Additional mobile-specific styling */
+        .app-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 30%, rgba(15, 20, 25, 0.3) 70%);
+            pointer-events: none;
+            z-index: 1;
         }
     </style>
 </head>
 <body>
-    <h1 class="title">4-4-8-4 Breathing</h1>
-    
-    <div class="breathing-container" id="breathingContainer">
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
-        <div class="circle"></div>
+    <div class="app-container">
+        <div class="title">4-4-8-4 Breathing</div>
         
-        <div class="counter" id="counter"></div>
-        <div class="instruction" id="instruction">Breathe</div>
+        <div class="breathing-container" id="breathingContainer">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        
+        <div class="text-container">
+            <div class="instruction" id="instruction">Breathe</div>
+            <div class="counter" id="counter"></div>
+        </div>
     </div>
 
     <script>
@@ -222,6 +287,22 @@
 
         // Initialize and start
         setTimeout(startBreathing, 1000);
+
+        // Prevent zoom on double tap (mobile)
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
     </script>
 </body>
 </html>
