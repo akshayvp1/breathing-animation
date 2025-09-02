@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mindful Breathing - 5-5-5-5 Technique</title>
+    <title>Mindful Breathing - Dark 9:16</title>
     <style>
         * {
             margin: 0;
@@ -11,27 +11,39 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #e8d5e8 0%, #f0e6f0 50%, #f5ebf5 100%);
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .mobile-frame {
+            width: 390px;
+            height: 693px;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: #5a4a6a;
+            color: #e8e8f0;
             overflow: hidden;
             position: relative;
+            border-radius: 0;
         }
 
         /* Floating ambient particles */
         .ambient-particle {
             position: absolute;
-            width: 3px;
-            height: 3px;
-            background: rgba(138, 114, 175, 0.2);
+            width: 2px;
+            height: 2px;
+            background: rgba(138, 180, 248, 0.3);
             border-radius: 50%;
-            animation: ambientFloat 20s infinite linear;
+            animation: ambientFloat 25s infinite linear;
         }
 
         @keyframes ambientFloat {
@@ -40,10 +52,10 @@
                 opacity: 0;
             }
             10% {
-                opacity: 1;
+                opacity: 0.6;
             }
             90% {
-                opacity: 1;
+                opacity: 0.6;
             }
             100% {
                 transform: translateY(-100vh) translateX(30px) rotate(360deg);
@@ -53,14 +65,20 @@
 
         .container {
             text-align: center;
-            max-width: 500px;
-            padding: 40px 30px;
+            width: 100%;
+            max-width: 350px;
+            padding: 40px 20px;
             position: relative;
             z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
 
         .header {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .title {
@@ -68,7 +86,8 @@
             font-weight: 600;
             margin-bottom: 8px;
             letter-spacing: 0.5px;
-            color: #6b5b7b;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(138, 180, 248, 0.3);
         }
 
         .subtitle {
@@ -76,15 +95,15 @@
             opacity: 0.7;
             font-weight: 400;
             letter-spacing: 0.3px;
-            color: #8a72af;
+            color: #8ab4f8;
         }
 
         /* Main breathing visualization */
         .breathing-container {
             position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 0 auto 30px;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -111,12 +130,13 @@
         /* Create overlapping geometric shapes */
         .petal-shape {
             position: absolute;
-            background: rgba(186, 104, 200, 0.15);
+            background: rgba(138, 180, 248, 0.15);
             border-radius: 50%;
             top: 50%;
             left: 50%;
             transform-origin: center;
             transition: all 5s ease-in-out;
+            box-shadow: 0 0 10px rgba(138, 180, 248, 0.1);
         }
 
         /* Layer 1 - Outermost petals */
@@ -128,7 +148,7 @@
         .layer-1 .petal-shape {
             width: 140px;
             height: 140px;
-            background: rgba(186, 104, 200, 0.08);
+            background: rgba(138, 180, 248, 0.08);
         }
 
         .layer-1 .petal-shape:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg) translateY(-35px); }
@@ -153,7 +173,7 @@
         .layer-2 .petal-shape {
             width: 110px;
             height: 110px;
-            background: rgba(186, 104, 200, 0.12);
+            background: rgba(138, 180, 248, 0.12);
         }
 
         .layer-2 .petal-shape:nth-child(1) { transform: translate(-50%, -50%) rotate(15deg) translateY(-28px); }
@@ -178,7 +198,7 @@
         .layer-3 .petal-shape {
             width: 80px;
             height: 80px;
-            background: rgba(186, 104, 200, 0.18);
+            background: rgba(138, 180, 248, 0.18);
         }
 
         .layer-3 .petal-shape:nth-child(1) { transform: translate(-50%, -50%) rotate(0deg) translateY(-20px); }
@@ -199,7 +219,7 @@
         .layer-4 .petal-shape {
             width: 50px;
             height: 50px;
-            background: rgba(186, 104, 200, 0.25);
+            background: rgba(138, 180, 248, 0.25);
         }
 
         .layer-4 .petal-shape:nth-child(1) { transform: translate(-50%, -50%) rotate(22.5deg) translateY(-12px); }
@@ -219,9 +239,10 @@
             transform: translate(-50%, -50%);
             width: 60px;
             height: 60px;
-            background: radial-gradient(circle, rgba(186, 104, 200, 0.4), rgba(186, 104, 200, 0.3));
+            background: radial-gradient(circle, rgba(138, 180, 248, 0.4), rgba(138, 180, 248, 0.2));
             border-radius: 50%;
             transition: all 5s ease-in-out;
+            box-shadow: 0 0 20px rgba(138, 180, 248, 0.2);
         }
 
         /* Breathing animations for mandala */
@@ -230,12 +251,14 @@
         }
 
         .breathing-mandala.inhale .petal-shape {
-            background: rgba(186, 104, 200, 0.25);
+            background: rgba(64, 224, 208, 0.25);
+            box-shadow: 0 0 15px rgba(64, 224, 208, 0.2);
         }
 
         .breathing-mandala.inhale .center-circle {
             transform: translate(-50%, -50%) scale(1.4);
-            background: radial-gradient(circle, rgba(186, 104, 200, 0.6), rgba(186, 104, 200, 0.4));
+            background: radial-gradient(circle, rgba(64, 224, 208, 0.6), rgba(64, 224, 208, 0.3));
+            box-shadow: 0 0 30px rgba(64, 224, 208, 0.4);
         }
 
         .breathing-mandala.hold1 .mandala-layer {
@@ -243,12 +266,14 @@
         }
 
         .breathing-mandala.hold1 .petal-shape {
-            background: rgba(186, 104, 200, 0.3);
+            background: rgba(255, 215, 0, 0.25);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
         }
 
         .breathing-mandala.hold1 .center-circle {
             transform: translate(-50%, -50%) scale(1.4);
-            background: radial-gradient(circle, rgba(186, 104, 200, 0.7), rgba(186, 104, 200, 0.5));
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.6), rgba(255, 215, 0, 0.3));
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
         }
 
         .breathing-mandala.exhale .mandala-layer {
@@ -256,12 +281,14 @@
         }
 
         .breathing-mandala.exhale .petal-shape {
-            background: rgba(186, 104, 200, 0.08);
+            background: rgba(147, 112, 219, 0.15);
+            box-shadow: 0 0 10px rgba(147, 112, 219, 0.1);
         }
 
         .breathing-mandala.exhale .center-circle {
             transform: translate(-50%, -50%) scale(0.6);
-            background: radial-gradient(circle, rgba(186, 104, 200, 0.3), rgba(186, 104, 200, 0.2));
+            background: radial-gradient(circle, rgba(147, 112, 219, 0.4), rgba(147, 112, 219, 0.2));
+            box-shadow: 0 0 15px rgba(147, 112, 219, 0.2);
         }
 
         .breathing-mandala.hold2 .mandala-layer {
@@ -269,113 +296,113 @@
         }
 
         .breathing-mandala.hold2 .petal-shape {
-            background: rgba(186, 104, 200, 0.1);
+            background: rgba(72, 149, 239, 0.15);
+            box-shadow: 0 0 10px rgba(72, 149, 239, 0.1);
         }
 
         .breathing-mandala.hold2 .center-circle {
             transform: translate(-50%, -50%) scale(0.6);
-            background: radial-gradient(circle, rgba(186, 104, 200, 0.25), rgba(186, 104, 200, 0.15));
+            background: radial-gradient(circle, rgba(72, 149, 239, 0.4), rgba(72, 149, 239, 0.2));
+            box-shadow: 0 0 15px rgba(72, 149, 239, 0.2);
         }
 
         /* Text elements */
         .phase-indicator {
             display: inline-block;
-            padding: 10px 20px;
-            background: rgba(138, 114, 175, 0.1);
+            padding: 12px 24px;
+            background: rgba(30, 30, 50, 0.8);
             border-radius: 25px;
             font-size: 0.9rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             transition: all 0.3s ease;
-            border: 1px solid rgba(138, 114, 175, 0.2);
+            border: 1px solid rgba(138, 180, 248, 0.3);
             letter-spacing: 0.5px;
             text-transform: uppercase;
-            color: #6b5b7b;
+            color: #ffffff;
+            backdrop-filter: blur(10px);
         }
 
         .phase-indicator.inhale {
-            background: rgba(255, 182, 193, 0.2);
-            border-color: rgba(255, 182, 193, 0.4);
-            color: #d6336c;
+            background: rgba(64, 224, 208, 0.2);
+            border-color: rgba(64, 224, 208, 0.5);
+            color: #40e0d0;
+            box-shadow: 0 0 15px rgba(64, 224, 208, 0.2);
         }
 
         .phase-indicator.hold1 {
-            background: rgba(255, 223, 186, 0.3);
-            border-color: rgba(255, 193, 7, 0.4);
-            color: #e6a000;
+            background: rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.5);
+            color: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
         }
 
         .phase-indicator.exhale {
-            background: rgba(138, 114, 175, 0.2);
-            border-color: rgba(138, 114, 175, 0.4);
-            color: #6b5b7b;
+            background: rgba(147, 112, 219, 0.2);
+            border-color: rgba(147, 112, 219, 0.5);
+            color: #9370db;
+            box-shadow: 0 0 15px rgba(147, 112, 219, 0.2);
         }
 
         .phase-indicator.hold2 {
-            background: rgba(200, 230, 255, 0.3);
-            border-color: rgba(100, 180, 255, 0.4);
-            color: #4a90e2;
+            background: rgba(72, 149, 239, 0.2);
+            border-color: rgba(72, 149, 239, 0.5);
+            color: #4895ef;
+            box-shadow: 0 0 15px rgba(72, 149, 239, 0.2);
         }
 
         .instruction {
             font-size: 1.1rem;
             font-weight: 400;
-            margin-bottom: 15px;
-            min-height: 28px;
+            margin-bottom: 20px;
+            min-height: 30px;
             letter-spacing: 0.3px;
-            color: #6b5b7b;
+            color: #b8c5d6;
+            text-align: center;
+            line-height: 1.4;
         }
 
         .counter {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 300;
-            margin-bottom: 25px;
-            min-height: 50px;
+            margin-bottom: 30px;
+            min-height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #8a72af;
+            color: #ffffff;
             font-feature-settings: 'tnum';
+            text-shadow: 0 0 20px rgba(138, 180, 248, 0.5);
         }
 
-        /* Responsive design */
-        @media (max-width: 480px) {
-            .container {
-                padding: 30px 20px;
-                margin: 20px;
-            }
-            
-            .breathing-container {
-                width: 280px;
-                height: 280px;
-            }
-            
-            .title {
-                font-size: 1.5rem;
-            }
-            
-            .counter {
-                font-size: 2.5rem;
-            }
+        /* Additional glow effects */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 40%, rgba(138, 180, 248, 0.05) 0%, transparent 70%);
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <!-- Floating ambient particles -->
-    <div class="ambient-particle" style="left: 10%; animation-delay: 0s;"></div>
-    <div class="ambient-particle" style="left: 20%; animation-delay: 3s;"></div>
-    <div class="ambient-particle" style="left: 30%; animation-delay: 6s;"></div>
-    <div class="ambient-particle" style="left: 40%; animation-delay: 9s;"></div>
-    <div class="ambient-particle" style="left: 50%; animation-delay: 12s;"></div>
-    <div class="ambient-particle" style="left: 60%; animation-delay: 15s;"></div>
-    <div class="ambient-particle" style="left: 70%; animation-delay: 18s;"></div>
-    <div class="ambient-particle" style="left: 80%; animation-delay: 21s;"></div>
-    <div class="ambient-particle" style="left: 90%; animation-delay: 24s;"></div>
+    <div class="mobile-frame">
+        <!-- Floating ambient particles -->
+        <div class="ambient-particle" style="left: 15%; animation-delay: 0s;"></div>
+        <div class="ambient-particle" style="left: 25%; animation-delay: 4s;"></div>
+        <div class="ambient-particle" style="left: 35%; animation-delay: 8s;"></div>
+        <div class="ambient-particle" style="left: 45%; animation-delay: 12s;"></div>
+        <div class="ambient-particle" style="left: 55%; animation-delay: 16s;"></div>
+        <div class="ambient-particle" style="left: 65%; animation-delay: 20s;"></div>
+        <div class="ambient-particle" style="left: 75%; animation-delay: 24s;"></div>
+        <div class="ambient-particle" style="left: 85%; animation-delay: 28s;"></div>
 
-    <div class="container">
+        <div class="container">
         <div class="header">
             <h1 class="title">5-5-5-5 Breathing</h1>
-            <!-- <p class="subtitle">5-5-5-5 Breathing</p> -->
         </div>
         
         <div class="phase-indicator" id="phaseIndicator">Prepare</div>
@@ -447,6 +474,7 @@
         <div class="instruction" id="instruction">Find a comfortable position and relax</div>
         <div class="counter" id="counter"></div>
     </div>
+</div>
 
     <script>
         class BreathingApp {

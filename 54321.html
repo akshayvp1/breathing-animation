@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5-4-3-2</title>
+    <title>5-4-3-2 Breathing - Mobile</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
         
@@ -13,38 +13,57 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .mobile-frame {
+            width: 390px;
+            height: 693px;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: #fff;
             overflow: hidden;
+            position: relative;
+            border-radius: 0;
         }
         
         .container {
             position: relative;
             width: 100%;
-            max-width: 500px;
+            max-width: 350px;
             text-align: center;
             padding: 20px;
             z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
         
         h1 {
-            font-weight: 300;
-            margin-bottom: 40px;
-            font-size: 28px;
-            color: rgba(255,255,255,0.9);
+            font-weight: 400;
+            margin-bottom: 30px;
+            font-size: 24px;
+            color: rgba(255,255,255,0.95);
+            letter-spacing: 1px;
         }
         
         .breath-container {
             position: relative;
-            width: 350px;
-            height: 350px;
-            margin: 0 auto 40px;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 30px;
         }
         
         .circle {
@@ -55,33 +74,33 @@
             transform: translate(-50%, -50%);
             mix-blend-mode: screen;
             opacity: 0.8;
-            transition: transform 0.1s ease-out;
+            transition: none;
         }
         
         .circle-1 {
-            width: 280px;
-            height: 280px;
+            width: 240px;
+            height: 240px;
             background: radial-gradient(circle, #ff9a9e 0%, #fad0c4 100%);
-            box-shadow: 0 0 50px rgba(255,154,158,0.4);
+            box-shadow: 0 0 40px rgba(255,154,158,0.4);
         }
         
         .circle-2 {
-            width: 220px;
-            height: 220px;
+            width: 190px;
+            height: 190px;
             background: radial-gradient(circle, #a1c4fd 0%, #c2e9fb 100%);
-            box-shadow: 0 0 40px rgba(161,196,253,0.4);
+            box-shadow: 0 0 35px rgba(161,196,253,0.4);
         }
         
         .circle-3 {
-            width: 160px;
-            height: 160px;
+            width: 140px;
+            height: 140px;
             background: radial-gradient(circle, #84fab0 0%, #8fd3f4 100%);
-            box-shadow: 0 0 30px rgba(132,250,176,0.4);
+            box-shadow: 0 0 25px rgba(132,250,176,0.4);
         }
         
         .circle-4 {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             background: radial-gradient(circle, #f6d365 0%, #fda085 100%);
             box-shadow: 0 0 20px rgba(246,211,101,0.4);
         }
@@ -94,23 +113,23 @@
         }
         
         .instruction {
-            font-size: 36px;
-            margin-bottom: 20px;
-            min-height: 50px;
+            font-size: 28px;
+            margin-bottom: 15px;
+            min-height: 40px;
             color: #fff;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             transition: all 0.3s ease;
         }
         
         .timer {
-            font-size: 80px;
+            font-size: 60px;
             font-weight: 300;
             margin-bottom: 20px;
             color: #fff;
-            text-shadow: 0 0 25px rgba(255,255,255,0.7);
-            min-height: 100px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.7);
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -128,7 +147,7 @@
         
         .particle {
             position: absolute;
-            background: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.3);
             border-radius: 50%;
             animation: float linear infinite;
         }
@@ -136,10 +155,10 @@
         @keyframes float {
             0% {
                 transform: translateY(0) rotate(0deg);
-                opacity: 0.4;
+                opacity: 0.3;
             }
             100% {
-                transform: translateY(-1000px) rotate(720deg);
+                transform: translateY(-700px) rotate(720deg);
                 opacity: 0;
             }
         }
@@ -148,37 +167,40 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             background: rgba(255,255,255,0.95);
             border-radius: 50%;
             z-index: 10;
-            transition: transform 0.1s ease-out;
+            transition: none;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
         
-        .phase-inhale .instruction { color: #84fab0; }
-        .phase-hold1 .instruction { color: #a1c4fd; }
-        .phase-exhale .instruction { color: #ff9a9e; }
-        .phase-hold2 .instruction { color: #f6d365; }
+        .phase-inhale .instruction { color: #84fab0; text-shadow: 0 0 10px rgba(132,250,176,0.5); }
+        .phase-hold1 .instruction { color: #a1c4fd; text-shadow: 0 0 10px rgba(161,196,253,0.5); }
+        .phase-exhale .instruction { color: #ff9a9e; text-shadow: 0 0 10px rgba(255,154,158,0.5); }
+        .phase-hold2 .instruction { color: #f6d365; text-shadow: 0 0 10px rgba(246,211,101,0.5); }
     </style>
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-    
-    <div class="container" id="container">
-        <h1>5-4-3-2 Breathing</h1>
+    <div class="mobile-frame">
+        <div class="particles" id="particles"></div>
         
-        <div class="breath-container">
-            <div class="circle circle-1"></div>
-            <div class="circle circle-2"></div>
-            <div class="circle circle-3"></div>
-            <div class="circle circle-4"></div>
-            <div class="circle circle-5"></div>
-            <div class="breath-indicator"></div>
+        <div class="container" id="container">
+            <h1>5-4-3-2 Breathing</h1>
+            
+            <div class="breath-container">
+                <div class="circle circle-1"></div>
+                <div class="circle circle-2"></div>
+                <div class="circle circle-3"></div>
+                <div class="circle circle-4"></div>
+                <div class="circle circle-5"></div>
+                <div class="breath-indicator"></div>
+            </div>
+            
+            <div class="instruction" id="instruction">Get Ready</div>
+            <div class="timer" id="timer">3</div>
         </div>
-        
-        <div class="instruction" id="instruction">Get Ready</div>
-        <div class="timer" id="timer">3</div>
     </div>
 
     <script>
@@ -191,15 +213,15 @@
         
         // Create floating particles
         function createParticles() {
-            const particleCount = 15;
+            const particleCount = 12;
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                const size = Math.random() * 5 + 2;
+                const size = Math.random() * 4 + 2;
                 const posX = Math.random() * 100;
-                const delay = Math.random() * 30;
-                const duration = Math.random() * 40 + 30;
+                const delay = Math.random() * 25;
+                const duration = Math.random() * 35 + 25;
                 const opacity = Math.random() * 0.3 + 0.1;
                 
                 particle.style.width = `${size}px`;
@@ -217,7 +239,7 @@
         
         // Animation scales for each circle and indicator
         const initialScales = [0.7, 0.6, 0.5, 0.4, 0.3, 0.8]; // Last one is for indicator
-        const maxScales = [1.5, 1.4, 1.3, 1.2, 1.1, 2.2]; // Last one is for indicator
+        const maxScales = [1.4, 1.3, 1.2, 1.1, 1.0, 2.0]; // Last one is for indicator
         const minScales = [0.3, 0.2, 0.15, 0.1, 0.05, 0.2]; // Last one is for indicator
         
         // Set initial positions
@@ -230,8 +252,8 @@
         
         setInitialScale();
         
-        // Animate to target scale over duration
-        function animateToScale(targetScales, duration) {
+        // Animate to target scale over duration with ultra-smooth easing for exhale
+        function animateToScale(targetScales, duration, isExhale = false) {
             const startTime = Date.now();
             const startScales = [];
             
@@ -251,17 +273,23 @@
                 const elapsed = Date.now() - startTime;
                 const progress = Math.min(elapsed / (duration * 1000), 1);
                 
-                // Smooth easing function
-                const eased = progress < 0.5 
-                    ? 2 * progress * progress 
-                    : -1 + (4 - 2 * progress) * progress;
+                let eased;
+                if (isExhale) {
+                    // Ultra slow and smooth easing for exhale - exponential decay
+                    eased = 1 - Math.exp(-3 * progress);
+                } else {
+                    // Regular smooth easing for other phases
+                    eased = progress < 0.5
+                        ? 2 * progress * progress
+                        : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+                }
                 
                 circles.forEach((circle, index) => {
                     const currentScale = startScales[index] + (targetScales[index] - startScales[index]) * eased;
                     circle.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
                 });
                 
-                // Animate indicator
+                // Animate indicator with extra smoothness for exhale
                 const indicatorScale = startScales[5] + (targetScales[5] - startScales[5]) * eased;
                 indicator.style.transform = `translate(-50%, -50%) scale(${indicatorScale})`;
                 
@@ -318,13 +346,15 @@
                 const elapsed = (Date.now() - startTime) / 1000;
                 const remaining = Math.max(0, duration - elapsed);
                 
-                // Display remaining time with one decimal precision for smoothness
+                // Display remaining time, never show zero
                 if (remaining >= 1) {
                     timer.textContent = Math.ceil(remaining);
                 } else if (remaining > 0) {
-                    timer.textContent = Math.ceil(remaining);
+                    timer.textContent = '1';
                 } else {
-                    timer.textContent = '0';
+                    timer.textContent = '1';
+                    if (callback) callback();
+                    return;
                 }
                 
                 if (remaining > 0) {
@@ -357,7 +387,8 @@
             
             // Start animation if needed
             if (phase.animate) {
-                animateToScale(phase.targetScales, phase.duration);
+                const isExhale = phase.name === 'exhale';
+                animateToScale(phase.targetScales, phase.duration, isExhale);
             }
             
             // Start smooth countdown timer
@@ -367,12 +398,12 @@
                 
                 // After exhale phase, add a smooth transition back to initial state
                 if (currentPhaseIndex === 0) {
-                    // Brief pause before starting next cycle
-                    animateToScale(initialScales, 0.5);
-                    setTimeout(runPhase, 500);
+                    // Extra smooth transition back to initial state over 1.5 seconds
+                    animateToScale(initialScales, 1.5, false);
+                    setTimeout(runPhase, 1700);
                 } else {
-                    // Continue to next phase immediately
-                    setTimeout(runPhase, 100);
+                    // Continue to next phase with small pause for smoothness
+                    setTimeout(runPhase, 300);
                 }
             });
         }
